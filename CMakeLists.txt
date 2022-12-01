@@ -8,12 +8,13 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_ENABLE_EXPORTS ON)
 add_compile_options(-Wall -Wextra -pedantic)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 find_package(ZeroMQ REQUIRED)
 find_package(gflags REQUIRED)
 find_package(spdlog REQUIRED)
 
 add_library(common ib.h ib.cc log.h log.cc zmq_helper.h)
-target_link_libraries(common ibverbs libzmq spdlog::spdlog)
+target_link_libraries(common ibverbs zmq spdlog::spdlog)
 
 add_executable(ubench ubench.cc server.h server.cc client.h client.cc)
 target_link_libraries(ubench common gflags_static)
